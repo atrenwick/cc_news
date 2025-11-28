@@ -1,8 +1,6 @@
-
 import os, requests, argparse
-from huggingface_hub import HfApi, hf_hub_download, HfFolder, hf_hub_url
+from huggingface_hub import HfApi, HfFolder, hf_hub_url
 from tqdm import tqdm
-
 
 def download_files_for_year(year, repo_id, local_dir):
   '''
