@@ -1,7 +1,10 @@
 # cc_news
 Creating corpora from CC News dumps with a bit of py
+
+
 Step 1 is performed by `get_parquetfiles.py`
 This step involves downloading the parquet files we want from HF.
+Note : requirements : HfFolder will need an HF token to have been set up to access the dataset.
 
 Step 2 is performed by `make_conll.py`
 This step takes parquet files retrieved in Step1, and extracts articles from them, exporting the data to json files as an intermediate step. This means we do the slower parquet processing step once.
