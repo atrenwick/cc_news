@@ -1,13 +1,20 @@
-import spacy, glob, re, hashlib, math, json, argparse, time,  os, re
-from spacy.pipeline import Sentencizer
-from tqdm import tqdm
-from multiprocessing import Pool, cpu_count
+# Standard library
+import argparse
+import glob
+import hashlib
+import json
+import math
+import os
+import re
+import time
 from functools import partial
-import pandas as pd
+from multiprocessing import Pool, cpu_count
+
+# Third-party
+from spacy.pipeline import Sentencizer
 import numpy as np
+from tqdm import tqdm
 import polars as pl
-
-
 
 
 def filter_parquet(this_file, filter_type, filter_value):
@@ -33,10 +40,7 @@ def filter_parquet(this_file, filter_type, filter_value):
   trimmed = filtered_df.collect()
     
   return trimmed
-  
-
-
-
+   
 def make_arrays(trimmed):
   '''
   Make arrays with metadata extracted from the df
@@ -76,14 +80,13 @@ def make_arrays(trimmed):
 
 
 
-
 def run_exporter_to_json_dict(my_arrays, this_file, mode, year, filter_type, filter_value):
   '''
   Export the arrays to a json file
   Inputs:
     my_arrays (list) : a list of arrays containing metadata created by `make_arrays`
     this_file (string) : absolute path to the parquet file being used
-    mode (string) : indicate whether to process in strict mode or not. If processing in strict mode, using `S`, the year in the crawl_date metadata must match the year specified in the `year` argument. 
+    mode (string) : indicate whether to process in strict mode or not. If processing in strict mode, using `S`, the year in the crawl_date metadata must match the year specified in the `year` argu[...]
     year (string) : 4 character string to indicate year being processed
     filter_type (str) : `lang` to filter on language, `domain` to filter on domain
     filter_value (str) : a language code if filtering on the language column, or a domain + top level extension if filtering on a website
@@ -114,7 +117,7 @@ def run_exporter_to_json_dict(my_arrays, this_file, mode, year, filter_type, fil
     for i in range(url_array.size):
       year = years_arr[i]
       if year == target_year:
-        values = {"url":url_array[i], "txt": plain_tex_arr[i], "title" : title_arr[i], "author": author_arr[i], "site" : sitename_arr[i], "resp_url" : resp_url_arr[i], "publi"  : publisher_arr[i], "warc_path" : warc_path_arr[i], "crawl_date" : crawl_date_arr[i], "month" : months_arr[i], "day" : days_arr[i]}
+        values = {"url":url_array[i], "txt": plain_tex_arr[i], "title" : title_arr[i], "author": author_arr[i], "site" : sitename_arr[i], "resp_url" : resp_url_arr[i], "publi"  : publisher_arr[i][...]
         tidy_dict[i] = values
 
     ## add the target_year to the path where the json will be written, then write to the file
@@ -122,7 +125,6 @@ def run_exporter_to_json_dict(my_arrays, this_file, mode, year, filter_type, fil
     with open(outputfile, 'w', encoding='UTF-8') as k:
       json.dump(tidy_dict, k)
     print(f'Printed file {outputfile}')
-
 
 def get_json_from_parquet(filter_type, filter_value, number, mode, year, local_dir=None):
   '''
@@ -133,7 +135,7 @@ def get_json_from_parquet(filter_type, filter_value, number, mode, year, local_d
     filter_type (str) : `lang` to filter on language, `domain` to filter on domain
     filter_value (str) : a language code if filtering on the language column, or a domain + top level extension if filtering on a website
   	number (int) : number of items at which to stop processing
-    mode (string) : indicate whether to process in strict mode or not. If processing in strict mode, using `S`, the year in the crawl_date metadata must match the year specified in the `year` argument. 
+    mode (string) : indicate whether to process in strict mode or not. If processing in strict mode, using `S`, the year in the crawl_date metadata must match the year specified in the `year` arg[...]
     year (str) : a year as 4 characters
     local_dir : str : default = None ; option to specify local dir in which to work
   Returns :
@@ -173,7 +175,6 @@ def get_json_from_parquet(filter_type, filter_value, number, mode, year, local_d
     for item in exportlog:
       print(item)
 
-
 def define_pipe(lang):
   '''
   Load the spacy nlp object for the specified language and add a sentencizer to the pipeline
@@ -206,7 +207,7 @@ def define_pipe(lang):
 
   nlp.add_pipe("sentencizer")
   return nlp
-  
+   
 def url_to_hex_id(url):
   '''
   create a 256 byte hash from a URL
@@ -330,7 +331,6 @@ def process_one_file(input_file, nlp):
   print(f"processing {input_file}")      
   send_to_files(input_file, file_output, chunk_size=50000)
   
-
 def sent_json_to_conll(year, lang, nproc):
   '''
   define the processing pipeline to run as in __main__
@@ -372,7 +372,7 @@ def sent_json_to_conll(year, lang, nproc):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="run step 1 to convert parquet to json files. Speed = about 30s per parquet file ≈ 4GB of parquet per min from external HDD\nrun step 2 to convert json to conllu files.")
+    parser = argparse.ArgumentParser(description="run step 1 to convert parquet to json files. Speed = about 30s per parquet file ≈ 4GB of parquet per min from external HDD\nrun step 2 to conve[...])
     parser.add_argument(
         "-year",help="YEAR for folder in standard hierarchy ")
     parser.add_argument(
@@ -408,4 +408,3 @@ if __name__ == "__main__":
         get_json_from_parquet(filter_type, filter_value, number, mode, year, local_dir=local_dir)
     if "2" not in skip_value:
         sent_json_to_conll(year, lang, nproc)
-
