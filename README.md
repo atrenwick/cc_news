@@ -3,7 +3,8 @@ Creating corpora from CC News dumps with a bit of py
 
 
 Step 1 is performed by `get_parquetfiles.py`
-This step involves downloading the parquet files we want from HF.
+This step involves downloading the parquet files we want from HF. Downloading can also be done with `huggingface_hub` , see https://huggingface.co/docs/huggingface_hub/en/guides/download.\n
+This script was more of a "Let's see if I can do it my way" exercise.
 Note : requirements : HfFolder will need an HF token to have been set up to access the dataset.
 
 Step 2 is performed by `make_conll.py`
