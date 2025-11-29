@@ -1,13 +1,18 @@
-import spacy, glob, re, hashlib, math, json, argparse, time,  os, re
-from spacy.pipeline import Sentencizer
-from tqdm import tqdm
-from multiprocessing import Pool, cpu_count
+import argparse
+import glob
+import hashlib
+import json
+import math
+import os
+import re
+import time
 from functools import partial
-import pandas as pd
+from multiprocessing import Pool, cpu_count
+
+# Third-party
+from spacy.pipeline import Sentencizer
 import numpy as np
-import polars as pl
-
-
+from tqdm import tqdm
 
 
 def filter_parquet(this_file, filter_type, filter_value):
