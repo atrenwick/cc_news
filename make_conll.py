@@ -150,7 +150,7 @@ def get_json_from_parquet(filter_type, filter_value, number, mode, year, local_d
   if local_dir == None:
     these_files = glob.glob(f'/Volumes/HC3Beta/uncompressed_parquet/cc_corpus/{year}/*.parquet')
   else:
-    these_files = glob.glob(f'/{def_local_dir}/{year}/*.parquet')
+    these_files = glob.glob(f'{local_dir}/{year}/*.parquet')
   # get the list of files to process and restrict it if necessary, and confirm this  
   if number ==0:
     these_files = these_files
