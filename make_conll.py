@@ -1,3 +1,4 @@
+# Standard library
 import argparse
 import glob
 import hashlib
@@ -13,6 +14,7 @@ from multiprocessing import Pool, cpu_count
 from spacy.pipeline import Sentencizer
 import numpy as np
 from tqdm import tqdm
+import polars as pl
 
 
 def filter_parquet(this_file, filter_type, filter_value):
