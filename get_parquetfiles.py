@@ -1,7 +1,13 @@
-import os, requests, argparse
-from huggingface_hub import HfApi, HfFolder, hf_hub_url
+import os
+import requests
+import argparse
+
 from tqdm import tqdm
 
+from huggingface_hub import HfApi, HfFolder, hf_hub_url
+## note that this script assumes a token has been obtained 
+## from HF and appropriately placed on the machine running
+## this script
 def download_files_for_year(year, repo_id, local_dir):
   '''
   Download parquet files for a given year from the HF repo
@@ -50,12 +56,12 @@ def download_files_for_year(year, repo_id, local_dir):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download specific parquet files from  a HF repo to a specified directory.")
     parser.add_argument(
-        "-year",help="YEAR for folder in standard hierarchy "
-        "-repo", help="path to HF repo"
+        "-year",help="YEAR for folder in standard hierarchy ",
+        "-repo", help="path to HF repo",
         "-local_dir", help="absolute path to local directory where files will be downloaded"
     )
-    args = parser.parse_args()
-    year = str(args.year)
-    repo = str(args.repo)
+    args = parser.parse_args(),
+    year = str(args.year),
+    repo = str(args.repo),
     local_dir = str(args.local_dir)
-    download_files_for_year(year, repo_id, local_dir)
+    download_files_for_year(year, repo, local_dir)
