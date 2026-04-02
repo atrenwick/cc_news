@@ -1,8 +1,12 @@
 
+import glob
+import os
+import argparse
+import re
+import logging
 from lxml import etree
-from stanza.utils.conll import CoNLL
 from tqdm import tqdm
-import glob, os, argparse, re, logging
+from stanza.utils.conll import CoNLL
 from multiprocessing import Pool, cpu_count
 from functools import partial
 
