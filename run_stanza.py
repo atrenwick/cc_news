@@ -1,4 +1,9 @@
-import stanza, glob, time, argparse, os
+import glob
+import time
+import argparse
+import os
+import stanza
+
 from stanza.utils.conll import CoNLL
 from tqdm import tqdm
 
