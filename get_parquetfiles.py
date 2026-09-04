@@ -4,7 +4,7 @@ import argparse
 
 from tqdm import tqdm
 
-from huggingface_hub import HfApi, HfFolder, hf_hub_url
+from huggingface_hub import HfApi, get_token, hf_hub_url
 ## note that this script assumes a token has been obtained 
 ## from HF and appropriately placed on the machine running
 ## this script
@@ -18,7 +18,7 @@ def download_files_for_year(year, repo_id, local_dir):
     no return object : files will be downloaded
   '''
   # talking to the HF API
-  token = HfFolder.get_token()
+  token = get_token()
   api = HfApi()
   headers = {"Authorization": f"Bearer {token}"} if token else {}
   # List all files in the repo
